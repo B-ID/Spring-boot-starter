@@ -1,5 +1,6 @@
 package com.java.springDemo.student;
 
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,13 +11,22 @@ import java.util.List;
 @RequestMapping("/api/v1/students")
 public class studentController {
 
-    @GetMapping
-    public List<String> findAllStudents() {
-        return List.of(
-                "Bukola", "Hello world"
-        );
+    //? Field injection (injecting a bean into a class)
+//    @Autowired
+//    private StudentService service;
 
+    private StudentService service;
+
+    //? Constructor Injection (Recommended)
+    public studentController(StudentService service) {
+        this.service = service;
     }
+
+    @GetMapping
+    public List<Student> findAllStudents() {
+        return service.findAllStudents();
+    }
+
 
 
 }
